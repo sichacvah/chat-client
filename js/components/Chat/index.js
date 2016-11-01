@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import GiftedMessenger from 'react-native-gifted-messenger';
 import moment from 'moment';
 import { View, Dimensions, Text } from 'react-native';
-import { toArray } from 'immutable';
-
+import Immutable from 'immutable';
+import uuid from 'uuid';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const STATUS_BAR_HEIGHT = 40;
 const CHAT_MAX_HEIGHT = SCREEN_HEIGHT - STATUS_BAR_HEIGHT;
@@ -16,19 +16,29 @@ export default class Chat extends Component {
   }
 
   handleSend(message) {
-    this.props.sendMessage(message);
+    const id = uuid.v4()
+    this.props.sendMessage({
+      ...message,
+      _id: id,
+      uniqueId: id
+    });
   }
 
   render() {
-    console.log(toArray(this.props.messages));
+    const user = this.props.currentUser.toJS();
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingTop: 40 }}>
        <GiftedMessenger
           ref='giftedMessenger'
           handleSend={ this.handleSend }
-          maxHeight={ CHAT_MAX_HEIGHT }
+          maxHeight={ CHAT_MAX_HEIGHT - 20}
           senderImage={ avatar }
-          messages={toArray(this.props.messages)}
+          messages={this.props.messages.toJS()}
+          user={{
+            _id: uuid.v4(),
+            name: user.name,
+            avatar,
+          }}
           />
       </View>
     );
