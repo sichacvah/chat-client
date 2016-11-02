@@ -6,7 +6,7 @@ import currentUserSelector from '../selectors/currentUser';
 
 
 const TIMEOUT = 10000;
-const URL = 'http://192.168.77.60:4000/socket';
+const URL = 'http://192.168.0.103:4000/socket';
 const LOBBY = 'rooms:lobby';
 
 function* handleIO(chan) {

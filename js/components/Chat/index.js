@@ -26,6 +26,8 @@ export default class Chat extends Component {
 
   render() {
     const user = this.props.currentUser.toJS();
+    const messages = this.props.messages.toJS();
+    console.log(messages);
     return (
       <View style={{ flex: 1, paddingTop: 40 }}>
        <GiftedMessenger
@@ -33,7 +35,7 @@ export default class Chat extends Component {
           handleSend={ this.handleSend }
           maxHeight={ CHAT_MAX_HEIGHT - 20}
           senderImage={ avatar }
-          messages={this.props.messages.toJS()}
+          messages={messages}
           user={{
             _id: uuid.v4(),
             name: user.name,
