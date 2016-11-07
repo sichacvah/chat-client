@@ -3,7 +3,7 @@ import { eventChannel, delay } from 'redux-saga';
 import { Socket } from 'phoenix-js';
 import { newMsg } from '../actions/messagesActions';
 import currentUserSelector from '../selectors/currentUser';
-
+import _ from 'lodash';
 
 const TIMEOUT = 10000;
 const URL = 'http://192.168.0.103:4000/socket';
@@ -29,7 +29,7 @@ function* write(chan) {
   while(true) {
     const { payload } = yield take('SEND_MESSAGE');
     const user = yield select(currentUserSelector);
-    yield call(() => chan.push('new:msg', {body: payload.text, user: user.toJS().name}, TIMEOUT));
+    yield call(() => chan.push('new:msg', {msg: _.first(payload), user: user.toJS().name}, TIMEOUT));
   }
 }
 

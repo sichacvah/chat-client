@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GiftedMessenger from 'react-native-gifted-messenger';
+import { GiftedChat } from 'react-native-gifted-chat';
 import moment from 'moment';
 import { View, Dimensions, Text } from 'react-native';
 import Immutable from 'immutable';
@@ -16,12 +16,7 @@ export default class Chat extends Component {
   }
 
   handleSend(message) {
-    const id = uuid.v4()
-    this.props.sendMessage({
-      ...message,
-      _id: id,
-      uniqueId: id
-    });
+    this.props.sendMessage(message);
   }
 
   render() {
@@ -30,9 +25,9 @@ export default class Chat extends Component {
     console.log(messages);
     return (
       <View style={{ flex: 1, paddingTop: 40 }}>
-       <GiftedMessenger
+       <GiftedChat
           ref='giftedMessenger'
-          handleSend={ this.handleSend }
+          onSend={ this.handleSend }
           maxHeight={ CHAT_MAX_HEIGHT - 20}
           senderImage={ avatar }
           messages={messages}
